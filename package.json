@@ -12,9 +12,11 @@
     "lint": "eslint . --ext .ts",
     "prettier:check": "prettier --check src/*",
     "prettier:write": "prettier --write src/*",
-    "no-console": "bash ../../githooks/dist/noConsole.sh"
+    "no-console": "bash ../../githooks/dist/noConsole.sh",
+    "no-dontmerge": "bash ../../githooks/dist/noDontMerge.sh"
   },
   "pre-commit": [
+    "no-dontmerge",
     "no-console",
     "prettier:check",
     "lint"
