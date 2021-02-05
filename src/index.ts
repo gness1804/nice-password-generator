@@ -15,12 +15,21 @@ import prompt = require('prompt');
         },
         message: 'Length must be an integer between 8 and 16.',
       },
+      allowSpecialChars: {
+        description: 'Do you want to allow special characters (i.e. "?", "@")?',
+        type: 'boolean',
+        default: true,
+        message: 'You must enter either "true" (or "t") or "false" (or "f").',
+      },
     },
   };
 
   prompt.start();
 
-  let { passwordLength } = await prompt.get(promptSchema);
+  const response = await prompt.get(promptSchema);
+
+  const { allowSpecialChars } = response;
+  let { passwordLength } = response;
 
   const generateRandomInt = (min: number, max: number): number =>
     Math.floor(Math.random() * (max - min) + min);
@@ -52,7 +61,7 @@ import prompt = require('prompt');
   let password = '';
 
   while (passwordLength > 0) {
-    const masterNum = generateRandomInt(0, 4);
+    const masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
     switch (masterNum) {
       case 0:
         password += generateRandomNum();

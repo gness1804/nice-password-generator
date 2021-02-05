@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var prompt = require("prompt");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var promptSchema, passwordLength, generateRandomInt, specialChars, charCodeRanges, num, upperAlpha, lowerAlpha, generateRandomNum, generateRandomUpperAlpha, generateRandomLowerAlpha, generateRandomSpecialChar, password, masterNum;
+    var promptSchema, response, allowSpecialChars, passwordLength, generateRandomInt, specialChars, charCodeRanges, num, upperAlpha, lowerAlpha, generateRandomNum, generateRandomUpperAlpha, generateRandomLowerAlpha, generateRandomSpecialChar, password, masterNum;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -58,12 +58,20 @@ var prompt = require("prompt");
                             },
                             message: 'Length must be an integer between 8 and 16.',
                         },
+                        allowSpecialChars: {
+                            description: 'Do you want to allow special characters (i.e. "?", "@")?',
+                            type: 'boolean',
+                            default: true,
+                            message: 'You must enter either "true" (or "t") or "false" (or "f").',
+                        },
                     },
                 };
                 prompt.start();
                 return [4 /*yield*/, prompt.get(promptSchema)];
             case 1:
-                passwordLength = (_a.sent()).passwordLength;
+                response = _a.sent();
+                allowSpecialChars = response.allowSpecialChars;
+                passwordLength = response.passwordLength;
                 generateRandomInt = function (min, max) {
                     return Math.floor(Math.random() * (max - min) + min);
                 };
@@ -89,7 +97,7 @@ var prompt = require("prompt");
                 };
                 password = '';
                 while (passwordLength > 0) {
-                    masterNum = generateRandomInt(0, 4);
+                    masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
                     switch (masterNum) {
                         case 0:
                             password += generateRandomNum();
