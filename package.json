@@ -8,7 +8,7 @@
   "scripts": {
     "start:build": "tsc -w",
     "build": "tsc",
-    "generate": "ts-node dist/index.js",
+    "generate": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "prettier:check": "prettier --check src/*",
     "prettier:write": "prettier --write src/*",
