@@ -37,8 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var prompt = require("prompt");
+var generate_1 = require("./utils/generate");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var promptSchema, response, allowSpecialChars, passwordLength, generateRandomInt, specialChars, charCodeRanges, num, upperAlpha, lowerAlpha, generateRandomNum, generateRandomUpperAlpha, generateRandomLowerAlpha, generateRandomSpecialChar, password, masterNum;
+    var promptSchema, response, password;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -70,52 +71,47 @@ var prompt = require("prompt");
                 return [4 /*yield*/, prompt.get(promptSchema)];
             case 1:
                 response = _a.sent();
-                allowSpecialChars = response.allowSpecialChars;
-                passwordLength = response.passwordLength;
-                generateRandomInt = function (min, max) {
-                    return Math.floor(Math.random() * (max - min) + min);
-                };
-                specialChars = ['@', '!', '#', '?', '~', '>', '=', '+', '%', '&'];
-                charCodeRanges = {
-                    num: [48, 57],
-                    upperAlpha: [65, 90],
-                    lowerAlpha: [97, 122],
-                };
-                num = charCodeRanges.num, upperAlpha = charCodeRanges.upperAlpha, lowerAlpha = charCodeRanges.lowerAlpha;
-                generateRandomNum = function () {
-                    return String.fromCharCode(generateRandomInt(num[0], num[1]));
-                };
-                generateRandomUpperAlpha = function () {
-                    return String.fromCharCode(generateRandomInt(upperAlpha[0], upperAlpha[1]));
-                };
-                generateRandomLowerAlpha = function () {
-                    return String.fromCharCode(generateRandomInt(lowerAlpha[0], lowerAlpha[1]));
-                };
-                generateRandomSpecialChar = function () {
-                    var randomIndex = generateRandomInt(0, specialChars.length - 1);
-                    return specialChars[randomIndex];
-                };
-                password = '';
-                while (passwordLength > 0) {
-                    masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
-                    switch (masterNum) {
-                        case 0:
-                            password += generateRandomNum();
-                            break;
-                        case 1:
-                            password += generateRandomUpperAlpha();
-                            break;
-                        case 2:
-                            password += generateRandomLowerAlpha();
-                            break;
-                        case 3:
-                            password += generateRandomSpecialChar();
-                            break;
-                        default:
-                            password += generateRandomNum();
-                    }
-                    passwordLength--;
-                }
+                password = generate_1.generate(response);
+                // const generateRandomInt = (min: number, max: number): number =>
+                //   Math.floor(Math.random() * (max - min) + min);
+                // const specialChars = ['@', '!', '#', '?', '~', '>', '=', '+', '%', '&'];
+                // const charCodeRanges = {
+                //   num: [48, 57],
+                //   upperAlpha: [65, 90],
+                //   lowerAlpha: [97, 122],
+                // };
+                // const { num, upperAlpha, lowerAlpha } = charCodeRanges;
+                // const generateRandomNum = (): string =>
+                //   String.fromCharCode(generateRandomInt(num[0], num[1]));
+                // const generateRandomUpperAlpha = (): string =>
+                //   String.fromCharCode(generateRandomInt(upperAlpha[0], upperAlpha[1]));
+                // const generateRandomLowerAlpha = (): string =>
+                //   String.fromCharCode(generateRandomInt(lowerAlpha[0], lowerAlpha[1]));
+                // const generateRandomSpecialChar = (): string => {
+                //   const randomIndex = generateRandomInt(0, specialChars.length - 1);
+                //   return specialChars[randomIndex];
+                // };
+                // let password = '';
+                // while (passwordLength > 0) {
+                //   const masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
+                //   switch (masterNum) {
+                //     case 0:
+                //       password += generateRandomNum();
+                //       break;
+                //     case 1:
+                //       password += generateRandomUpperAlpha();
+                //       break;
+                //     case 2:
+                //       password += generateRandomLowerAlpha();
+                //       break;
+                //     case 3:
+                //       password += generateRandomSpecialChar();
+                //       break;
+                //     default:
+                //       password += generateRandomNum();
+                //   }
+                //   passwordLength--;
+                // }
                 /* eslint-disable-next-line no-console */
                 console.info("Your password is: " + password);
                 return [2 /*return*/];
