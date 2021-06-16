@@ -45,7 +45,7 @@ var check_password_strength_1 = require("check-password-strength");
 var node_cli_handle_error_1 = __importDefault(require("node-cli-handle-error"));
 var chalk_1 = require("chalk");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var promptSchema, response, retries, password, str;
+    var promptSchema, retries, password, response, str;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -73,23 +73,26 @@ var chalk_1 = require("chalk");
                         },
                     },
                 };
+                retries = 3;
+                _a.label = 1;
+            case 1:
+                if (!(retries > 0)) return [3 /*break*/, 3];
                 prompt.start();
                 return [4 /*yield*/, prompt.get(promptSchema)];
-            case 1:
+            case 2:
                 response = _a.sent();
-                retries = 3;
-                while (retries > 0) {
-                    password = generate_1.generate(response);
-                    str = check_password_strength_1.passwordStrength(password).value;
-                    if (str === 'Strong') {
-                        /* eslint-disable-next-line no-console */
-                        console.info("Your password is: " + chalk_1.green(password));
-                        return [2 /*return*/];
-                    }
-                    else {
-                        retries--;
-                    }
+                password = generate_1.generate(response);
+                str = check_password_strength_1.passwordStrength(password).value;
+                if (str === 'Strong') {
+                    /* eslint-disable-next-line no-console */
+                    console.info("Your password is: " + chalk_1.green(password));
+                    return [2 /*return*/];
                 }
+                else {
+                    retries--;
+                }
+                return [3 /*break*/, 1];
+            case 3:
                 // failure case; reject.
                 node_cli_handle_error_1.default('You have hit the unlikely case of three consecutive weak passwords. Please run the script again.', {});
                 return [2 /*return*/];

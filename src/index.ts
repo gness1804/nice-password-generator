@@ -28,14 +28,13 @@ import { green } from 'chalk';
     },
   };
 
-  prompt.start();
-
-  const response = await prompt.get(promptSchema);
-
   let retries = 3;
-
+  // TODO: fix so that once user chooses params, it checks 3 times if needed for a pw rather than asking them again each time.
   let password;
   while (retries > 0) {
+    prompt.start();
+
+    const response = await prompt.get(promptSchema);
     password = generate(response);
     const str = passwordStrength(password).value;
     if (str === 'Strong') {
