@@ -35,11 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var prompt = require("prompt");
 var generate_1 = require("./utils/generate");
+var check_password_strength_1 = require("check-password-strength");
+var node_cli_handle_error_1 = __importDefault(require("node-cli-handle-error"));
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var promptSchema, response, password;
+    var promptSchema, response, retries, password, str;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -71,49 +76,21 @@ var generate_1 = require("./utils/generate");
                 return [4 /*yield*/, prompt.get(promptSchema)];
             case 1:
                 response = _a.sent();
-                password = generate_1.generate(response);
-                // const generateRandomInt = (min: number, max: number): number =>
-                //   Math.floor(Math.random() * (max - min) + min);
-                // const specialChars = ['@', '!', '#', '?', '~', '>', '=', '+', '%', '&'];
-                // const charCodeRanges = {
-                //   num: [48, 57],
-                //   upperAlpha: [65, 90],
-                //   lowerAlpha: [97, 122],
-                // };
-                // const { num, upperAlpha, lowerAlpha } = charCodeRanges;
-                // const generateRandomNum = (): string =>
-                //   String.fromCharCode(generateRandomInt(num[0], num[1]));
-                // const generateRandomUpperAlpha = (): string =>
-                //   String.fromCharCode(generateRandomInt(upperAlpha[0], upperAlpha[1]));
-                // const generateRandomLowerAlpha = (): string =>
-                //   String.fromCharCode(generateRandomInt(lowerAlpha[0], lowerAlpha[1]));
-                // const generateRandomSpecialChar = (): string => {
-                //   const randomIndex = generateRandomInt(0, specialChars.length - 1);
-                //   return specialChars[randomIndex];
-                // };
-                // let password = '';
-                // while (passwordLength > 0) {
-                //   const masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
-                //   switch (masterNum) {
-                //     case 0:
-                //       password += generateRandomNum();
-                //       break;
-                //     case 1:
-                //       password += generateRandomUpperAlpha();
-                //       break;
-                //     case 2:
-                //       password += generateRandomLowerAlpha();
-                //       break;
-                //     case 3:
-                //       password += generateRandomSpecialChar();
-                //       break;
-                //     default:
-                //       password += generateRandomNum();
-                //   }
-                //   passwordLength--;
-                // }
-                /* eslint-disable-next-line no-console */
-                console.info("Your password is: " + password);
+                retries = 3;
+                while (retries > 0) {
+                    password = generate_1.generate(response);
+                    str = check_password_strength_1.passwordStrength(password).value;
+                    if (str === 'Strong') {
+                        /* eslint-disable-next-line no-console */
+                        console.info("Your password is: " + password);
+                        return [2 /*return*/];
+                    }
+                    else {
+                        retries--;
+                    }
+                }
+                // failure case; reject.
+                node_cli_handle_error_1.default('You have hit the unlikely case of three consecutive weak passwords. Please run the script again.', {});
                 return [2 /*return*/];
         }
     });

@@ -1,0 +1,1 @@
+declare module 'node-cli-handle-error';
