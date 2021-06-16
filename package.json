@@ -14,7 +14,7 @@
     "generate": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "prettier:check": "prettier --check src/*",
-    "prettier:write": "prettier --write src/*",
+    "prettier:write": "prettier --write src/*"
   },
   "pre-commit": [
     "prettier:check",
