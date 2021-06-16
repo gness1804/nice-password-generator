@@ -2,6 +2,7 @@ import prompt = require('prompt');
 import { generate } from './utils/generate';
 import { passwordStrength } from 'check-password-strength';
 import handleError from 'node-cli-handle-error';
+import { green } from 'chalk';
 
 (async () => {
   const promptSchema = {
@@ -39,7 +40,7 @@ import handleError from 'node-cli-handle-error';
     const str = passwordStrength(password).value;
     if (str === 'Strong') {
       /* eslint-disable-next-line no-console */
-      console.info(`Your password is: ${password}`);
+      console.info(`Your password is: ${green(password)}`);
       return;
     } else {
       retries--;

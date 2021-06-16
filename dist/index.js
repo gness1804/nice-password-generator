@@ -43,6 +43,7 @@ var prompt = require("prompt");
 var generate_1 = require("./utils/generate");
 var check_password_strength_1 = require("check-password-strength");
 var node_cli_handle_error_1 = __importDefault(require("node-cli-handle-error"));
+var chalk_1 = require("chalk");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var promptSchema, response, retries, password, str;
     return __generator(this, function (_a) {
@@ -82,7 +83,7 @@ var node_cli_handle_error_1 = __importDefault(require("node-cli-handle-error"));
                     str = check_password_strength_1.passwordStrength(password).value;
                     if (str === 'Strong') {
                         /* eslint-disable-next-line no-console */
-                        console.info("Your password is: " + password);
+                        console.info("Your password is: " + chalk_1.green(password));
                         return [2 /*return*/];
                     }
                     else {
