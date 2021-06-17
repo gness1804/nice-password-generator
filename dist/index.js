@@ -35,24 +35,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var prompt = require("prompt");
 var generate_1 = require("./utils/generate");
 var check_password_strength_1 = require("check-password-strength");
-var node_cli_handle_error_1 = __importDefault(require("node-cli-handle-error"));
 var chalk_1 = require("chalk");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var promptSchema, retries, password, response, str;
+    var promptSchema, response, password, str;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 promptSchema = {
                     properties: {
                         passwordLength: {
-                            description: 'Enter in a password length.',
+                            description: 'Enter in a password length. Must be between 8 and 10. Recommend at least 10 for strongest password.',
                             type: 'number',
                             default: 12,
                             conform: function (val) {
@@ -73,28 +69,14 @@ var chalk_1 = require("chalk");
                         },
                     },
                 };
-                retries = 3;
-                _a.label = 1;
-            case 1:
-                if (!(retries > 0)) return [3 /*break*/, 3];
-                prompt.start();
                 return [4 /*yield*/, prompt.get(promptSchema)];
-            case 2:
+            case 1:
                 response = _a.sent();
+                prompt.start();
                 password = generate_1.generate(response);
                 str = check_password_strength_1.passwordStrength(password).value;
-                if (str === 'Strong') {
-                    /* eslint-disable-next-line no-console */
-                    console.info("Your password is: " + chalk_1.green(password));
-                    return [2 /*return*/];
-                }
-                else {
-                    retries--;
-                }
-                return [3 /*break*/, 1];
-            case 3:
-                // failure case; reject.
-                node_cli_handle_error_1.default('You have hit the unlikely case of three consecutive weak passwords. Please run the script again.', {});
+                /* eslint-disable-next-line no-console */
+                console.info("Your password is " + chalk_1.green(password));
                 return [2 /*return*/];
         }
     });

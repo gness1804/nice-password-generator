@@ -8,7 +8,8 @@ import { green } from 'chalk';
   const promptSchema = {
     properties: {
       passwordLength: {
-        description: 'Enter in a password length.',
+        description:
+          'Enter in a password length. Must be between 8 and 10. Recommend at least 10 for strongest password.',
         type: 'number',
         default: 12,
         conform(val: number) {
@@ -28,27 +29,12 @@ import { green } from 'chalk';
     },
   };
 
-  let retries = 3;
-  // TODO: fix so that once user chooses params, it checks 3 times if needed for a pw rather than asking them again each time.
-  let password;
-  while (retries > 0) {
-    prompt.start();
+  const response = await prompt.get(promptSchema);
+  prompt.start();
 
-    const response = await prompt.get(promptSchema);
-    password = generate(response);
-    const str = passwordStrength(password).value;
-    if (str === 'Strong') {
-      /* eslint-disable-next-line no-console */
-      console.info(`Your password is: ${green(password)}`);
-      return;
-    } else {
-      retries--;
-    }
-  }
+  const password = generate(response);
 
-  // failure case; reject.
-  handleError(
-    'You have hit the unlikely case of three consecutive weak passwords. Please run the script again.',
-    {},
-  );
+  const str = passwordStrength(password).value;
+  /* eslint-disable-next-line no-console */
+  console.info(`Your password is ${green(password)}`);
 })();
