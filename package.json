@@ -27,6 +27,7 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
+    "auto-changelog": "^2.3.0",
     "chalk": "^4.1.1",
     "check-password-strength": "^2.0.3",
     "eslint": "^7.19.0",
