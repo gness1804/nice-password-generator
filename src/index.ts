@@ -29,7 +29,7 @@ import { green } from 'chalk';
   };
 
   let retries = 3;
-  // TODO: fix so that once user chooses params, it checks 3 times if needed for a pw rather than asking them again each time.
+  // TODO: Refactor so that a strong password is generated each time https://github.com/gness1804/nice-password-generator/issues/1
   let password;
   while (retries > 0) {
     prompt.start();

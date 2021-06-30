@@ -11,10 +11,14 @@
   "scripts": {
     "start:build": "tsc -w",
     "build": "tsc",
-    "generate": "node dist/index.js",
+    "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "prettier:check": "prettier --check src/*",
-    "prettier:write": "prettier --write src/*"
+    "prettier:write": "prettier --write src/*",
+    "changelog": "auto-changelog -p -l 8 && git add CHANGELOG.md",
+    "tag:patch": "npm version patch && npm run changelog",
+    "tag:minor": "npm version minor && npm run changelog",
+    "tag:major": "npm version major && npm run changelog"
   },
   "pre-commit": [
     "prettier:check",
