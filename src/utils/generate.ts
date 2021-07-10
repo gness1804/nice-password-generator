@@ -1,5 +1,4 @@
 interface UserRes {
-  allowSpecialChars: boolean;
   passwordLength: number;
 }
 
