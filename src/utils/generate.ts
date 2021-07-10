@@ -3,10 +3,7 @@ interface UserRes {
   passwordLength: number;
 }
 
-export const generate = ({
-  allowSpecialChars,
-  passwordLength,
-}: UserRes): string => {
+export const generate = ({ passwordLength }: UserRes): string => {
   const generateRandomInt = (min: number, max: number): number =>
     Math.floor(Math.random() * (max - min) + min);
 
@@ -36,26 +33,38 @@ export const generate = ({
 
   let password = '';
 
-  while (passwordLength > 0) {
-    const masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
-    switch (masterNum) {
-      case 0:
+  while (password.length < passwordLength) {
+    switch (password.length) {
+      case 1:
+      case 5:
+      case 9:
+      case 13:
         password += generateRandomNum();
         break;
-      case 1:
+      case 2:
+      case 6:
+      case 10:
+      case 14:
         password += generateRandomUpperAlpha();
         break;
-      case 2:
+      case 3:
+      case 7:
+      case 11:
+      case 15:
         password += generateRandomLowerAlpha();
         break;
-      case 3:
+      case 4:
+      case 8:
+      case 12:
+      case 16:
         password += generateRandomSpecialChar();
         break;
       default:
         password += generateRandomNum();
     }
-    passwordLength--;
   }
+
+  const rawPassword = password;
 
   return password;
 };
