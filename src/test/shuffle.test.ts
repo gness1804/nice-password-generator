@@ -10,6 +10,6 @@ describe('shuffle', () => {
     alert2({
       type: 'success',
       msg: `The output string is ${res}`,
-    })
+    });
   });
-})
+});

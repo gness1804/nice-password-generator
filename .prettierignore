@@ -8,4 +8,7 @@ package.json
 README.md
 # webpack.config.js
 # project-specific files
+dist/
+tsconfig.json
+*.d.ts
 

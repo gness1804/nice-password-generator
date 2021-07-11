@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const { shuffle } = require('../utils/shuffle');
+
 interface UserRes {
   passwordLength: number;
 }
@@ -63,7 +67,7 @@ export const generate = ({ passwordLength }: UserRes): string => {
     }
   }
 
-  const rawPassword = password;
+  const shuffledPassword = shuffle(password);
 
-  return password;
+  return shuffledPassword;
 };

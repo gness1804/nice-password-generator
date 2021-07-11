@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const _prompt = require('prompt');
 const { generate } = require('./utils/generate');
-const { passwordStrength } = require('check-password-strength');
 const handleError = require('cli-handle-error');
 const _alert = require('cli-alerts');
 
@@ -30,15 +29,6 @@ const _alert = require('cli-alerts');
     _prompt.start();
 
     const password = generate(response);
-
-    // let str = passwordStrength(password).value;
-
-    // while (str !== 'Strong') {
-    //   console.log('str:', str);
-    //   password = generate(response);
-    //   console.log('password:', password);
-    //   str = passwordStrength(password).value;
-    // }
 
     _alert({
       type: 'success',
