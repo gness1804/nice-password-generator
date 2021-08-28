@@ -1,8 +1,10 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-var-requires */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generate = void 0;
-var generate = function (_a) {
-    var allowSpecialChars = _a.allowSpecialChars, passwordLength = _a.passwordLength;
+var shuffle = require('../utils/shuffle').shuffle;
+exports.generate = function (_a) {
+    var passwordLength = _a.passwordLength;
     var generateRandomInt = function (min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     };
@@ -27,26 +29,36 @@ var generate = function (_a) {
         return specialChars[randomIndex];
     };
     var password = '';
-    while (passwordLength > 0) {
-        var masterNum = generateRandomInt(0, allowSpecialChars ? 4 : 3);
-        switch (masterNum) {
-            case 0:
+    while (password.length < passwordLength) {
+        switch (password.length) {
+            case 1:
+            case 5:
+            case 9:
+            case 13:
                 password += generateRandomNum();
                 break;
-            case 1:
+            case 2:
+            case 6:
+            case 10:
+            case 14:
                 password += generateRandomUpperAlpha();
                 break;
-            case 2:
+            case 3:
+            case 7:
+            case 11:
+            case 15:
                 password += generateRandomLowerAlpha();
                 break;
-            case 3:
+            case 4:
+            case 8:
+            case 12:
+            case 16:
                 password += generateRandomSpecialChar();
                 break;
             default:
                 password += generateRandomNum();
         }
-        passwordLength--;
     }
-    return password;
+    var shuffledPassword = shuffle(password);
+    return shuffledPassword;
 };
-exports.generate = generate;

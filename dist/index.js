@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -35,49 +36,50 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var prompt = require("prompt");
-var generate_1 = require("./utils/generate");
-var check_password_strength_1 = require("check-password-strength");
-var chalk_1 = require("chalk");
+/* eslint-disable @typescript-eslint/no-var-requires */
+var _prompt = require('prompt');
+var generate = require('./utils/generate').generate;
+var handleError = require('cli-handle-error');
+var _alert = require('cli-alerts');
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var promptSchema, response, password, str;
+    var promptSchema, response, password, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 2, , 3]);
                 promptSchema = {
                     properties: {
                         passwordLength: {
-                            description: 'Enter in a password length. Must be between 8 and 10. Recommend at least 10 for strongest password.',
+                            description: 'Enter in a password length. Must be between 10 and 16.',
                             type: 'number',
                             default: 12,
                             conform: function (val) {
                                 // check if val is in fact an integer
                                 if (Math.floor(val) !== val || Math.ceil(val) !== val)
                                     return false;
-                                if (val > 7 && val < 17)
+                                if (val > 9 && val < 17)
                                     return true;
                                 return false;
                             },
-                            message: 'Length must be an integer between 8 and 16.',
-                        },
-                        allowSpecialChars: {
-                            description: 'Do you want to allow special characters (i.e. "?", "@")?',
-                            type: 'boolean',
-                            default: true,
-                            message: 'You must enter either "true" (or "t") or "false" (or "f").',
+                            message: 'Length must be an integer between 10 and 16.',
                         },
                     },
                 };
-                return [4 /*yield*/, prompt.get(promptSchema)];
+                return [4 /*yield*/, _prompt.get(promptSchema)];
             case 1:
                 response = _a.sent();
-                prompt.start();
-                password = generate_1.generate(response);
-                str = check_password_strength_1.passwordStrength(password).value;
-                /* eslint-disable-next-line no-console */
-                console.info("Your password is " + chalk_1.green(password));
-                return [2 /*return*/];
+                _prompt.start();
+                password = generate(response);
+                _alert({
+                    type: 'success',
+                    msg: "Your password is " + password,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                error_1 = _a.sent();
+                handleError('Error generating password', error_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); })();
